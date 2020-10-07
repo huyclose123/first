@@ -4,7 +4,7 @@ import styles from './style';
 import {FlatList, View, Text, Image, TouchableOpacity} from 'react-native';
 import Header from '../header/header';
 import CardSalon from '../cardsalon/card_salon';
-
+import I18n from '../../in18/translation';
 export default Home = ({navigation, route}) => {
   const data = [
     {
@@ -80,7 +80,7 @@ export default Home = ({navigation, route}) => {
             onPress={() => {
               setDataFliter(data);
             }}>
-            <Text style={styles.text3}>All</Text>
+            <Text style={styles.text3}>{I18n.t('ALL')}</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.view3}>
@@ -88,7 +88,7 @@ export default Home = ({navigation, route}) => {
             onPress={() => {
               setDataFliter(filterData(data, 'bike'));
             }}>
-            <Text style={styles.text3}>Bike</Text>
+            <Text style={styles.text3}>{I18n.t('Bike')}</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.view3}>
@@ -96,7 +96,7 @@ export default Home = ({navigation, route}) => {
             onPress={() => {
               setDataFliter(filterData(data, 'animal'));
             }}>
-            <Text style={styles.text3}>Animal</Text>
+            <Text style={styles.text3}>{I18n.t('Animal')}</Text>
           </TouchableOpacity>
         </View>
       </View>

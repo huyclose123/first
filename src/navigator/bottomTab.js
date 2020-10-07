@@ -5,22 +5,28 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from '../component/home/home';
 import CardUser from '../component/carduser/CardUser';
 import {SafeAreaView} from 'react-navigation';
-
+import auth from '@react-native-firebase/auth';
+import I18n from '../in18/translation';
 const tintColor = 'rgb(23,146,230)';
-
+function signOut() {
+  auth()
+    .signOut()
+    .then(() => console.log('User signed out!'));
+}
 function SettingsScreen({navigation, route}) {
-  console.log(route.params.id);
+  console.log(route.params._user);
   return (
     <SafeAreaView style={{flex: 1, flexDirection: 'column'}}>
       <View style={{marginTop: 100}}>
         <CardUser
-          name={route.params.id}
-          email={route.params.name}
+          name={route.params._user.displayName}
+          email={route.params._user.email}
           url="https://cdn.icon-icons.com/icons2/1161/PNG/512/1487716857-user_81635.png"></CardUser>
       </View>
       <View style={{position: 'absolute', bottom: 5, left: 10}}>
         <TouchableOpacity
           onPress={() => {
+            signOut();
             navigation.popToTop();
           }}>
           <Text style={{fontSize: 25}}>LogOut</Text>
@@ -45,13 +51,15 @@ export default BottomTab = ({route}) => {
           lineHeight: 14,
           letterSpacing: 1.2,
         },
-      }}>
+      }}
+      headerMode="none"
+      screenOptions={{gestureEnabled: false}}>
       <Tab.Screen
-        initialParams={route.params.id}
+        initialParams={route.params}
         name="Home"
         component={Home}
         options={{
-          tabBarLabel: 'Home ',
+          tabBarLabel: I18n.t('Home'),
         }}
       />
       <Tab.Screen
@@ -59,7 +67,7 @@ export default BottomTab = ({route}) => {
         name="Settings"
         component={SettingsScreen}
         options={{
-          tabBarLabel: 'Account',
+          tabBarLabel: I18n.t('Account'),
         }}
       />
     </Tab.Navigator>
